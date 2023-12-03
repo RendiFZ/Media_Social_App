@@ -1,0 +1,57 @@
+
+
+name: rendi_art
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+ 
+  cupertino_icons: ^1.0.2
+  shared_preferences: ^2.0.8
+  #firebase_app_check: ^0.2.1+6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  firebase_core: "^2.24.0"
+  firebase_auth: "^4.15.0"
+  change_app_package_name: ^1.1.0
+  cloud_firestore: ^4.0.1
+  intl: ^0.17.0
+  firebase_storage:
+  image_picker:
+  flutter_native_image:
+  flutter_image_compress: ^1.1.0
+  photo_view:
+  flutter_launcher_icons:
+
+
+
+
+  flutter_lints: ^3.0.1
+
+flutter:
+
+  uses-material-design: true
+
+
+  
+  assets:
+    - packages/rendi_art/assets/img/logo/Luxqo Drei.png
+    - packages/rendi_art/assets/profils.png
+
+flutter_icons:  # This should be at the same level as `flutter` and `dependencies`
+  image_path: "assets/Launcher.png"  # Replace with your icon file path
+  android: true
+  ios: true

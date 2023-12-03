@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "941832634147",
+    "project_id": "dreiartthread-1df44",
+    "storage_bucket": "dreiartthread-1df44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941832634147:android:bcbba5aa96aadbcad79696",
+        "android_client_info": {
+          "package_name": "com.rendirizkyfarel.dreiart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbUFP38SlaFL4cFdxfRE0A381SFiio0T0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
