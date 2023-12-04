@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rendi_art/pages/profile_page_search/threadpost_search.dart';
 import 'package:rendi_art/pages/selection/editprofil.dart';
-import 'package:rendi_art/pages/selection/showcase.dart';
 import 'package:rendi_art/pages/selection/threadpost.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'galleryart_search.dart'; // Import file galleryart_search.dart
 
 class ProfilPageSearch extends StatefulWidget {
   final String userId;
@@ -29,10 +30,16 @@ class _ProfilPageSearchState extends State<ProfilPageSearch> {
   }
 
   Future<void> fetchImageUrls() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('images').get();
-    List<String> fetchedImageUrls =
-        querySnapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
+    String userId = widget.userId; // Gunakan userId dari widget
+    firebase_storage.ListResult result =
+        await firebase_storage.FirebaseStorage.instance.ref('posts_img/$userId').listAll();
+
+    List<String> fetchedImageUrls = [];
+    for (var ref in result.items) {
+      String url = await ref.getDownloadURL();
+      fetchedImageUrls.add(url);
+    }
+
     setState(() {
       imageUrls = fetchedImageUrls;
     });
@@ -109,8 +116,6 @@ class _ProfilPageSearchState extends State<ProfilPageSearch> {
                         ],
                       ),
                     ),
-                    Text(user?.displayName ??
-                        'Anonymous'), // Menampilkan username
                     FutureBuilder<DocumentSnapshot>(
                       future: FirebaseFirestore.instance
                           .collection('profils')
@@ -129,6 +134,10 @@ class _ProfilPageSearchState extends State<ProfilPageSearch> {
                               snapshot.data!.data() as Map<String, dynamic>;
                           return Column(
                             children: <Widget>[
+                              Text(
+                                data['username'] ?? 'Anonymous', // Menampilkan username
+                                style: TextStyle(fontSize: 16.0),
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -190,8 +199,8 @@ class _ProfilPageSearchState extends State<ProfilPageSearch> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    GalleryArt(),
-                    ThreadPost(),
+                    GalleryArtSearch(userId: widget.userId), // Pass userId to GalleryArt
+                    ThreadPostSearch(userId: widget.userId),
                   ],
                 ),
               ),

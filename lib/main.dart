@@ -3,6 +3,7 @@ import 'package:rendi_art/akun_page/login.dart';
 import 'package:rendi_art/ui/navbar_ui.dart';
 import 'package:rendi_art/auth.dart'; // Ganti dengan path AuthService Anda
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 void main() async {
@@ -34,20 +35,16 @@ class MyApp extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: FutureBuilder<bool>(
-        future: AuthService.isLoggedIn(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Tampilkan loading spinner saat menunggu
-          } else {
-            if (snapshot.data ?? false) {
-              return MyNavBar(); // Jika pengguna sudah login, arahkan ke homepage
-            } else {
-              return LoginPage(); // Jika pengguna belum login, arahkan ke halaman login
-            }
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            return snapshot.data != null ? MyNavBar() : LoginPage();
           }
+          return CircularProgressIndicator();
         },
       ),
     );
   }
 }
+
